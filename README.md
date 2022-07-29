@@ -2,7 +2,7 @@
 
 ### Sobre o projeto
 
-  Projeto desenvolvido no modulo de Arquitetura de Softaware Ágil com os professores [Rafael Rocha](https://github.com/rafarocha) e [Hugo Bredow](https://github.com/hugobrendow), projetado pelos alunos: 
+  Projeto desenvolvido no modulo de Arquitetura de Softaware Ágil com os professores [Rafael Rocha](https://github.com/rafarocha) e [Hugo Brendow](https://github.com/hugobrendow), projetado pelos alunos: 
   
   - [André Mapa](https://github.com/andremapa)
   - [Carolina Vendrami](https://github.com/carolruo)
