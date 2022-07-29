@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /api/jojocoin
+  port: 8081
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    username: jojocoin
+    password: lex1234
+    url: jdbc:postgresql://localhost:5432/postgres
+    driverClassName: org.postgresql.Driver
+
+
