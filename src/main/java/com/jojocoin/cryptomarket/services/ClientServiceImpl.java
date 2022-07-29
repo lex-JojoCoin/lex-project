@@ -1,6 +1,7 @@
 package com.jojocoin.cryptomarket.services;
 
-import com.jojocoin.cryptomarket.dtos.ClientDTO;
+import com.jojocoin.cryptomarket.dtos.request.ClientRequestDto;
+import com.jojocoin.cryptomarket.dtos.response.ClientResponseDto;
 import com.jojocoin.cryptomarket.models.ClientModel;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
 import com.jojocoin.cryptomarket.exceptions.DataIntegrityException;
@@ -11,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,36 +23,63 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
 
     @Override
-    public List<ClientModel> findAll() {
-        return clientRepository.findAll();
+    public List<ClientResponseDto> findAll() {
+        List<ClientModel> modelList = clientRepository.findAll();
+        List<ClientResponseDto> response = new ArrayList<>();
+
+        for (ClientModel model : modelList) {
+            ClientResponseDto responseDto = new ClientResponseDto();
+            BeanUtils.copyProperties(model, responseDto);
+            response.add(responseDto);
+        }
+        return response;
     }
 
     @Override
-    public ClientModel findById(UUID id) {
-        return clientRepository.findById(id).orElseThrow(() -> new ClientModelNotFoundException("Cliente não encontrado. ID:" + id));
+    public ClientResponseDto findById(UUID id) {
+        ClientModel clientModel = findClientModel(id);
+
+        ClientResponseDto clientResponseDto = new ClientResponseDto();
+        BeanUtils.copyProperties(clientModel, clientResponseDto);
+        return clientResponseDto;
     }
 
     @Override
-    public ClientModel save(ClientDTO clientDTO) {
+    public ClientResponseDto save(ClientRequestDto request) {
         ClientModel clientModel = new ClientModel();
-        BeanUtils.copyProperties(clientDTO, clientModel);
-        return clientRepository.save(clientModel);
+
+        BeanUtils.copyProperties(request, clientModel);
+        clientRepository.save(clientModel); //Como salvar sem campos nulos?
+
+        ClientResponseDto response = new ClientResponseDto();
+        BeanUtils.copyProperties(clientModel, response);
+        return response;
     }
 
     @Override
-    public ClientModel update(UUID id, ClientDTO clientDTO) {
-        ClientModel clientModel = findById(id);
-        BeanUtils.copyProperties(clientDTO, clientModel);
-        return clientRepository.save(clientModel);
+    public ClientResponseDto update(UUID id, ClientRequestDto request) {
+        ClientModel clientModel = findClientModel(id);
+
+        BeanUtils.copyProperties(request, clientModel);
+        clientRepository.save(clientModel);
+
+        ClientResponseDto response = new ClientResponseDto();
+        BeanUtils.copyProperties(clientModel, response);
+        return response;
     }
 
     @Override
     public void delete(UUID id) {
-        findById(id);
+        findClientModel(id);
         try {
             clientRepository.deleteById(id);
         } catch (DataIntegrityViolationException exception) {
-            throw new DataIntegrityException("Não é possível deletar o cliente");
+            throw new DataIntegrityException();
         }
+    }
+
+    private ClientModel findClientModel(UUID id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new ClientModelNotFoundException(id));
     }
 }
