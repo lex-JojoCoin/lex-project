@@ -27,10 +27,15 @@ public class DataConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        RoleModel role = new RoleModel();
-        role.setRoleId(UUID.randomUUID());
-        role.setRoleName(RoleName.ROLE_ADMIN);
-        roleRepository.save(role);
+        RoleModel roleAdmin = new RoleModel();
+        roleAdmin.setRoleId(UUID.randomUUID());
+        roleAdmin.setRoleName(RoleName.ROLE_ADMIN);
+        roleRepository.save(roleAdmin);
+
+        RoleModel roleUser = new RoleModel();
+        roleUser.setRoleId(UUID.randomUUID());
+        roleUser.setRoleName(RoleName.ROLE_USER);
+        roleRepository.save(roleUser);
 
         UserModel user = new UserModel();
         user.setUserId(UUID.randomUUID());
