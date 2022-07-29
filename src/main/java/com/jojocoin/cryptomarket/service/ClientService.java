@@ -8,10 +8,12 @@ import com.jojocoin.cryptomarket.service.exceptions.ClientModelNotFoundException
 import com.jojocoin.cryptomarket.service.interfaces.IClientService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class ClientService implements IClientService {
 
     private final ClientRepository clientRepository;
