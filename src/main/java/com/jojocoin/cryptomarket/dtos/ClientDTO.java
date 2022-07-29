@@ -1,4 +1,4 @@
-package com.jojocoin.cryptomarket.dto;
+package com.jojocoin.cryptomarket.dtos;
 
 import com.jojocoin.cryptomarket.models.UserModel;
 

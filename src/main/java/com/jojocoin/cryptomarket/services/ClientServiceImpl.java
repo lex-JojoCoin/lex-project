@@ -1,11 +1,12 @@
-package com.jojocoin.cryptomarket.service;
+package com.jojocoin.cryptomarket.services;
 
-import com.jojocoin.cryptomarket.dto.ClientDTO;
+import com.jojocoin.cryptomarket.dtos.ClientDTO;
 import com.jojocoin.cryptomarket.models.ClientModel;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
-import com.jojocoin.cryptomarket.service.exceptions.DataIntegrityException;
-import com.jojocoin.cryptomarket.service.exceptions.ClientModelNotFoundException;
-import com.jojocoin.cryptomarket.service.interfaces.IClientService;
+import com.jojocoin.cryptomarket.exceptions.DataIntegrityException;
+import com.jojocoin.cryptomarket.exceptions.ClientModelNotFoundException;
+import com.jojocoin.cryptomarket.services.interfaces.ClientService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ClientService implements IClientService {
+@AllArgsConstructor
+public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
-
-    public ClientService(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
 
     @Override
     public List<ClientModel> findAll() {
@@ -29,7 +27,7 @@ public class ClientService implements IClientService {
 
     @Override
     public ClientModel findById(UUID id) {
-        return clientRepository.findById(id).orElseThrow(() -> new ClientModelNotFoundException("Cliente não encontrado"));
+        return clientRepository.findById(id).orElseThrow(() -> new ClientModelNotFoundException("Cliente não encontrado. ID:" + id));
     }
 
     @Override

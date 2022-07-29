@@ -1,4 +1,4 @@
-package com.jojocoin.cryptomarket.service.exceptions;
+package com.jojocoin.cryptomarket.exceptions;
 
 public class DataIntegrityException extends RuntimeException {
 

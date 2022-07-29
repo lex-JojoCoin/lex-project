@@ -1,13 +1,12 @@
-package com.jojocoin.cryptomarket.service.interfaces;
+package com.jojocoin.cryptomarket.services.interfaces;
 
-import com.jojocoin.cryptomarket.dto.ClientDTO;
+import com.jojocoin.cryptomarket.dtos.ClientDTO;
 import com.jojocoin.cryptomarket.models.ClientModel;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface IClientService {
+public interface ClientService {
 
     List<ClientModel> findAll();
     ClientModel findById(UUID id);
