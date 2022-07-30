@@ -24,16 +24,15 @@ public class ClientModel implements Serializable {
     private String name;
     @Column(nullable = false, unique = true)
     private String cpf;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String pix;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
-    @ManyToOne
-    @JoinColumn(name = "mainWallet_id")
-    private WalletModel mainWallet;
-    @OneToMany(mappedBy = "client")
-    private List<WalletModel> wallets;
-    @OneToMany(mappedBy = "client")
-    private List<CardModel> cards;
+
+    //TODO: Ver as relações e as entidades comentadas
+//    @OneToOne
+//    private MainWallet mainWallet;
+//    @OneToMany
+//    private List<CardModel> cards;
 }

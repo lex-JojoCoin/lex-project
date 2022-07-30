@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{uuid}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserModel> findById(@PathVariable UUID uuid){
         UserModel model = service.findById(uuid);
         log.info("User found from the given id");
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserModel> save(@RequestBody UserModelRequestDto request){
         UserModel model = service.save(request);
         log.info("New user created");
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/{uuid}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserModel> update(@PathVariable UUID uuid,
                                             UserModelRequestDto request){
         UserModel model = service.update(uuid, request);

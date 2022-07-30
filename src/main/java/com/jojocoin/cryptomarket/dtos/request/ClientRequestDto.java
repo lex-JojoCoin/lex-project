@@ -1,9 +1,9 @@
 package com.jojocoin.cryptomarket.dtos.request;
 
-import com.jojocoin.cryptomarket.models.UserModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -14,6 +14,7 @@ public class ClientRequestDto {
 
     @NotEmpty
     private String name;
+    @CPF
     @NotEmpty
     private String cpf;
     @NotEmpty

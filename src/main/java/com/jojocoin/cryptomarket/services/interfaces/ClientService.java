@@ -1,7 +1,6 @@
 package com.jojocoin.cryptomarket.services.interfaces;
 
 import com.jojocoin.cryptomarket.dtos.request.ClientRequestDto;
-import com.jojocoin.cryptomarket.dtos.response.ClientResponseDto;
 import com.jojocoin.cryptomarket.models.ClientModel;
 
 import java.util.List;
@@ -9,9 +8,12 @@ import java.util.UUID;
 
 public interface ClientService {
 
-    List<ClientResponseDto> findAll();
-    ClientResponseDto findById(UUID id);
-    ClientResponseDto save(ClientRequestDto clientRequestDTO);
-    ClientResponseDto update(UUID id, ClientRequestDto clientRequestDTO);
+    List<ClientModel> findAll();
+    ClientModel findById(UUID id);
+    ClientModel findByCpf(String cpf);
+    ClientModel save(ClientRequestDto request);
+    ClientModel update(UUID id, ClientRequestDto request);
+    ClientModel update(String cpf, ClientRequestDto request);
     void delete(UUID id);
+    void delete(String cpf);
 }

@@ -1,12 +1,16 @@
 package com.jojocoin.cryptomarket.services;
 
 import com.jojocoin.cryptomarket.dtos.request.ClientRequestDto;
+import com.jojocoin.cryptomarket.dtos.request.UserModelRequestDto;
 import com.jojocoin.cryptomarket.dtos.response.ClientResponseDto;
+import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
 import com.jojocoin.cryptomarket.models.ClientModel;
+import com.jojocoin.cryptomarket.models.UserModel;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
 import com.jojocoin.cryptomarket.exceptions.DataIntegrityException;
 import com.jojocoin.cryptomarket.exceptions.ClientModelNotFoundException;
 import com.jojocoin.cryptomarket.services.interfaces.ClientService;
+import com.jojocoin.cryptomarket.services.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,65 +25,60 @@ import java.util.UUID;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final UserService userService;
 
-    @Override
-    public List<ClientResponseDto> findAll() {
-        List<ClientModel> modelList = clientRepository.findAll();
-        List<ClientResponseDto> response = new ArrayList<>();
-
-        for (ClientModel model : modelList) {
-            ClientResponseDto responseDto = new ClientResponseDto();
-            BeanUtils.copyProperties(model, responseDto);
-            response.add(responseDto);
-        }
-        return response;
+    public List<ClientModel> findAll() {
+        return clientRepository.findAll();
     }
 
-    @Override
-    public ClientResponseDto findById(UUID id) {
-        ClientModel clientModel = findClientModel(id);
-
-        ClientResponseDto clientResponseDto = new ClientResponseDto();
-        BeanUtils.copyProperties(clientModel, clientResponseDto);
-        return clientResponseDto;
+    public ClientModel findById(UUID id) {
+        return clientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(id));
     }
 
-    @Override
-    public ClientResponseDto save(ClientRequestDto request) {
-        ClientModel clientModel = new ClientModel();
+    public ClientModel findByCpf(String cpf) {
+        return clientRepository.findByCpf(cpf).orElseThrow(()-> new ResourceNotFoundException(cpf));
+    }
 
+    public ClientModel save(ClientRequestDto request) {
+        UserModel model = userService.save(
+                new UserModelRequestDto(request.getUsername(), request.getPassword()));
+        ClientModel clientModel = new ClientModel(
+                UUID.randomUUID(),
+                request.getName(),
+                request.getCpf(),
+                null,
+                model);
+        return clientRepository.save(clientModel);
+    }
+
+    public ClientModel update(UUID id, ClientRequestDto request) {
+        ClientModel clientModel = findById(id);
         BeanUtils.copyProperties(request, clientModel);
-        clientRepository.save(clientModel); //Como salvar sem campos nulos?
-
-        ClientResponseDto response = new ClientResponseDto();
-        BeanUtils.copyProperties(clientModel, response);
-        return response;
+        return clientRepository.save(clientModel);
     }
 
-    @Override
-    public ClientResponseDto update(UUID id, ClientRequestDto request) {
-        ClientModel clientModel = findClientModel(id);
-
+    public ClientModel update(String cpf, ClientRequestDto request) {
+        ClientModel clientModel = findByCpf(cpf);
         BeanUtils.copyProperties(request, clientModel);
-        clientRepository.save(clientModel);
-
-        ClientResponseDto response = new ClientResponseDto();
-        BeanUtils.copyProperties(clientModel, response);
-        return response;
+        return clientRepository.save(clientModel);
     }
 
-    @Override
     public void delete(UUID id) {
-        findClientModel(id);
+        ClientModel byId = findById(id);
         try {
-            clientRepository.deleteById(id);
+            clientRepository.deleteById(byId.getClientId());
         } catch (DataIntegrityViolationException exception) {
             throw new DataIntegrityException();
         }
     }
 
-    private ClientModel findClientModel(UUID id) {
-        return clientRepository.findById(id)
-                .orElseThrow(() -> new ClientModelNotFoundException(id));
+    public void delete(String cpf) {
+        ClientModel byCpf = findByCpf(cpf);
+        try {
+            clientRepository.deleteById(byCpf.getClientId());
+        } catch (DataIntegrityViolationException exception) {
+            throw new DataIntegrityException();
+        }
     }
+
 }

@@ -1,5 +1,8 @@
 package com.jojocoin.cryptomarket.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +12,9 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "TB_USER")
 public class UserModel implements UserDetails, Serializable {
 
@@ -27,7 +33,6 @@ public class UserModel implements UserDetails, Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleModel> roles;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,23 +69,4 @@ public class UserModel implements UserDetails, Serializable {
         return true;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRoles(Set<RoleModel> roles) {
-        this.roles = roles;
-    }
 }

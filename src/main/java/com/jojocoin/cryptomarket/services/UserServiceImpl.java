@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserService {
         Set<RoleModel> roles = new HashSet<>();
         roles.add(roleRepository.findByRoleName(RoleName.ROLE_USER));
 
-        UserModel user = new UserModel();
-        user.setUsername(entity.getUsername());
-        user.setPassword(passwordEncoder.encode(entity.getPassword()));
-        user.setRoles(roles);
+        UserModel user = new UserModel(null,
+                entity.getUsername(),
+                passwordEncoder.encode(entity.getPassword()),
+                roles);
         return userRepository.save(user);
     }
 

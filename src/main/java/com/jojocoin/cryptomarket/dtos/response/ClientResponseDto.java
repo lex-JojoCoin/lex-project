@@ -1,6 +1,6 @@
 package com.jojocoin.cryptomarket.dtos.response;
 
-import com.jojocoin.cryptomarket.models.UserModel;
+import com.jojocoin.cryptomarket.models.ClientModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ClientResponseDto {
 
@@ -18,4 +17,10 @@ public class ClientResponseDto {
     private String cpf;
     @NotEmpty
     private String username;
+
+    public ClientResponseDto(ClientModel model) {
+        this.name = model.getName();
+        this.cpf = model.getCpf();
+        this.username = model.getUser().getUsername();
+    }
 }
