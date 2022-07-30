@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity(name = "TB_MAIN_WALLET")
-public class MainWallet implements Serializable {
+public class MainWalletModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +22,10 @@ public class MainWallet implements Serializable {
     private BigDecimal saldo;
     @OneToMany
     @JoinColumn(name = "cryptoWallet_id", nullable = false)
-    private List<CryptoWallet> cryptoWallets;
+    private List<CryptoWalletModel> cryptoWalletModels;
+    @OneToOne
+    private ClientModel client;
+
     //@OneToOne
     //@JoinColumn(name = "transaction_id")
     //private List<Transaction> transactionLog;

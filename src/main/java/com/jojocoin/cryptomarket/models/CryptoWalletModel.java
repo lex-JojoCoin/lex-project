@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity(name = "TB_CRYPTO_WALLET")
-public class CryptoWallet {
+public class CryptoWalletModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -29,10 +29,11 @@ public class ClientModel implements Serializable {
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
+    @OneToOne (mappedBy = "client", cascade = CascadeType.ALL)
+    @JoinColumn(name = "main_wallet_id", nullable = false)
+    private MainWalletModel mainWallet;
 
     //TODO: Ver as relações e as entidades comentadas
-//    @OneToOne
-//    private MainWallet mainWallet;
 //    @OneToMany
 //    private List<CardModel> cards;
 }
