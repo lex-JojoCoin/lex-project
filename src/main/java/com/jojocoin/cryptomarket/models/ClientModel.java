@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -29,11 +28,9 @@ public class ClientModel implements Serializable {
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
-    @OneToOne (mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "main_wallet_id", nullable = false)
     private MainWalletModel mainWallet;
-
-    //TODO: Ver as relações e as entidades comentadas
 //    @OneToMany
 //    private List<CardModel> cards;
 }

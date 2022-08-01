@@ -1,23 +1,25 @@
 package com.jojocoin.cryptomarket.services;
 
 import com.jojocoin.cryptomarket.dtos.request.ClientRequestDto;
+import com.jojocoin.cryptomarket.dtos.request.MainWalletRequestDto;
 import com.jojocoin.cryptomarket.dtos.request.UserModelRequestDto;
-import com.jojocoin.cryptomarket.dtos.response.ClientResponseDto;
 import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
 import com.jojocoin.cryptomarket.models.ClientModel;
+import com.jojocoin.cryptomarket.models.MainWalletModel;
 import com.jojocoin.cryptomarket.models.UserModel;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
 import com.jojocoin.cryptomarket.exceptions.DataIntegrityException;
-import com.jojocoin.cryptomarket.exceptions.ClientModelNotFoundException;
 import com.jojocoin.cryptomarket.services.interfaces.ClientService;
+import com.jojocoin.cryptomarket.services.interfaces.MainWalletService;
 import com.jojocoin.cryptomarket.services.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -26,6 +28,7 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
     private final UserService userService;
+    private final MainWalletService mainWalletService;
 
     public List<ClientModel> findAll() {
         return clientRepository.findAll();
@@ -40,14 +43,19 @@ public class ClientServiceImpl implements ClientService {
     }
 
     public ClientModel save(ClientRequestDto request) {
-        UserModel model = userService.save(
+        UserModel clientUser = userService.save(
                 new UserModelRequestDto(request.getUsername(), request.getPassword()));
+
+        MainWalletModel defaultWallet = mainWalletService.save(
+                new MainWalletRequestDto(BigDecimal.valueOf(0)));
+
         ClientModel clientModel = new ClientModel(
                 UUID.randomUUID(),
                 request.getName(),
                 request.getCpf(),
-                null,
-                model
+                randomPixKey(),
+                clientUser,
+                defaultWallet
                 );
         return clientRepository.save(clientModel);
     }
@@ -80,6 +88,21 @@ public class ClientServiceImpl implements ClientService {
         } catch (DataIntegrityViolationException exception) {
             throw new DataIntegrityException();
         }
+    }
+
+    private String randomPixKey(){
+        StringBuilder builder = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 16; i++) {
+            int control = random.nextInt(4);
+            if (control==0){
+                char x = ((char) (random.nextInt(26) + 'a'));
+                builder.append(Character.toString(x).toLowerCase());
+            } else{
+                builder.append(random.nextInt(10));
+            }
+        }
+        return builder.toString();
     }
 
 }

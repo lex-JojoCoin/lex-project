@@ -2,8 +2,11 @@ package com.jojocoin.cryptomarket.controllers;
 
 
 import com.jojocoin.cryptomarket.dtos.request.MainWalletRequestDto;
+import com.jojocoin.cryptomarket.dtos.response.CryptoWalletResponse;
+import com.jojocoin.cryptomarket.models.CryptoWalletModel;
 import com.jojocoin.cryptomarket.models.MainWalletModel;
 import com.jojocoin.cryptomarket.services.interfaces.MainWalletService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +18,10 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/wallets")
 public class WalletController{
 
-    // Injeção de dependência
-    @Autowired
     private MainWalletService service;
 
     @GetMapping
@@ -31,6 +33,7 @@ public class WalletController{
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MainWalletModel> findById(@PathVariable Long id){
         MainWalletModel model = service.findById(id);
         log.info("User wallet from the given id");
@@ -38,6 +41,7 @@ public class WalletController{
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MainWalletModel> save(@RequestBody MainWalletRequestDto request){
         MainWalletModel model = service.save(request);
         log.info("New wallet created");
@@ -45,6 +49,7 @@ public class WalletController{
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<MainWalletModel> update(@PathVariable Long id,
                                             MainWalletRequestDto request){
         MainWalletModel model = service.update(id, request);
