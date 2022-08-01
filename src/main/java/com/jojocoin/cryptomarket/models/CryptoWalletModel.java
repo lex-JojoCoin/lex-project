@@ -1,6 +1,5 @@
 package com.jojocoin.cryptomarket.models;
 
-import com.jojocoin.cryptomarket.enums.CoinName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +16,14 @@ public class CryptoWalletModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    /*
-    @OneToOne
-    @JoinColumn(name = "", nullable = false)
-    private CoinName typeCoin;
-    */
-    private BigDecimal amount;
-    private BigDecimal saldo;
     @Column(nullable = false, unique = true)
     private Long publicKey;
     @Column(nullable = false, unique = true)
     private Long privateKey;
+    private BigDecimal amount;
+    private BigDecimal balance;
+    @OneToOne
+    private CoinModel coin;
+
 
 }

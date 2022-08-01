@@ -15,8 +15,10 @@ public class CryptoWalletRequestDto {
     @NotEmpty
     private BigDecimal amount;
     @NotEmpty
-    private BigDecimal saldo;
+    private BigDecimal balance;
     @NotEmpty
     private Long publicKey;
+    @NotEmpty
+    private String coinName;
 
 }
