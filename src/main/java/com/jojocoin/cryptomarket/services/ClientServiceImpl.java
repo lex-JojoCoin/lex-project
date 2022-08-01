@@ -47,7 +47,8 @@ public class ClientServiceImpl implements ClientService {
                 request.getName(),
                 request.getCpf(),
                 null,
-                model);
+                model
+                );
         return clientRepository.save(clientModel);
     }
 

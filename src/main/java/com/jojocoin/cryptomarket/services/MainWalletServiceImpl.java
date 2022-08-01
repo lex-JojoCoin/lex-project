@@ -6,6 +6,7 @@ import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
 import com.jojocoin.cryptomarket.models.ClientModel;
 import com.jojocoin.cryptomarket.models.CryptoWalletModel;
 import com.jojocoin.cryptomarket.models.MainWalletModel;
+import com.jojocoin.cryptomarket.models.UserModel;
 import com.jojocoin.cryptomarket.repository.MainWalletRepository;
 import com.jojocoin.cryptomarket.services.interfaces.MainWalletService;
 import lombok.AllArgsConstructor;
@@ -55,5 +56,9 @@ public class MainWalletServiceImpl implements MainWalletService {
         return mainWalletRepository.save(mainWalletModel);
     }
 
+    public void deleteById(Long id) {
+        MainWalletModel wallet = findById(id);
+        mainWalletRepository.delete(wallet);
+    }
 
 }
