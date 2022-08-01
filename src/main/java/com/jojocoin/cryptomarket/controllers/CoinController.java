@@ -24,7 +24,7 @@ public class CoinController {
         return service.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public CoinModel findById(@PathVariable String id){
         return service.findById(id);
     }

@@ -30,7 +30,7 @@ public class ClientController {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
-    @GetMapping("findById/{id}")
+    @GetMapping("/findById/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ClientModel> findById(@PathVariable UUID id){
         ClientModel byId = service.findById(id);
@@ -38,7 +38,7 @@ public class ClientController {
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
-    @GetMapping("findByCpf/{cpf}")
+    @GetMapping("/findByCpf/{cpf}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ClientResponseDto> findByCpf(@PathVariable String cpf){
         ClientModel byCpf = service.findByCpf(cpf);
@@ -52,7 +52,7 @@ public class ClientController {
         log.info("New client saved on database");
         return new ResponseEntity<>(new ClientResponseDto(save), HttpStatus.CREATED);
     }
-    @PutMapping("findById/{id}")
+    @PutMapping("/findById/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ClientModel> update(@PathVariable UUID id,
                                                     @RequestBody ClientRequestDto request){
@@ -61,7 +61,7 @@ public class ClientController {
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
-    @PutMapping("findByCpf/{cpf}")
+    @PutMapping("/findByCpf/{cpf}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ClientResponseDto> update(@PathVariable String cpf,
                                                     @RequestBody ClientRequestDto request){
@@ -70,7 +70,7 @@ public class ClientController {
         return new ResponseEntity<>(new ClientResponseDto(update), HttpStatus.OK);
     }
 
-    @DeleteMapping("findById/{id}")
+    @DeleteMapping("/findById/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> delete(@PathVariable UUID id){
         service.delete(id);
@@ -78,7 +78,7 @@ public class ClientController {
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
-    @DeleteMapping("findByCpf/{cpf}")
+    @DeleteMapping("/findByCpf/{cpf}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<String> delete(@PathVariable String cpf){
         service.delete(cpf);
