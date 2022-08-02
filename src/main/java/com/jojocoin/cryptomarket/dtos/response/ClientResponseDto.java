@@ -1,6 +1,5 @@
 package com.jojocoin.cryptomarket.dtos.response;
 
-import com.jojocoin.cryptomarket.dtos.request.CardRequestDto;
 import com.jojocoin.cryptomarket.models.ClientModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

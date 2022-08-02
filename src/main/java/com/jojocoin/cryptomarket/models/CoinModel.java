@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "TB_COINS")
-public class CoinModel {
+public class CoinModel implements Serializable {
 
     @Id
     private String id;

@@ -1,8 +1,6 @@
 package com.jojocoin.cryptomarket.controllers;
 
-import com.jojocoin.cryptomarket.feign.CoinClientFeignService;
 import com.jojocoin.cryptomarket.models.CoinModel;
-import com.jojocoin.cryptomarket.models.DataClientModel;
 import com.jojocoin.cryptomarket.services.interfaces.CoinService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
