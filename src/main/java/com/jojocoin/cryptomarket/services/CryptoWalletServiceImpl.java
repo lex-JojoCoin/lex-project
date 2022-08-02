@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Random;
 
@@ -39,8 +40,8 @@ public class CryptoWalletServiceImpl implements CryptoWalletService {
                         null,
                         request.getPublicKey(),
                         randomPrivateKey(),
-                        request.getAmount(),
-                        request.getBalance(),
+                        BigDecimal.ZERO,
+                        BigDecimal.ZERO,
                         coin
                 );
         return repository.save(model);

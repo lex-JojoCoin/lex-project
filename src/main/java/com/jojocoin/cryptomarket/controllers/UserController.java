@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<UserModel> save(@RequestBody UserModelRequestDto request){
+    public ResponseEntity<UserModel> save(@RequestBody @Valid UserModelRequestDto request){
         UserModel model = service.save(request);
         log.info("New user created");
         return new ResponseEntity<>(model, HttpStatus.CREATED);

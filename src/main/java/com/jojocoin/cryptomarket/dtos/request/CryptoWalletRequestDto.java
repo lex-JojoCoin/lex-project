@@ -5,20 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CryptoWalletRequestDto {
 
-    @NotEmpty
-    private BigDecimal amount;
-    @NotEmpty
-    private BigDecimal balance;
-    @NotEmpty
+    @NotNull
     private Long publicKey;
     @NotEmpty
     private String coinName;
-
 }
