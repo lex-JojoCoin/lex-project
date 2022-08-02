@@ -20,10 +20,11 @@ public class CryptoWalletModel {
     private Long publicKey;
     @Column(nullable = false, unique = true)
     private Long privateKey;
+    @Column(nullable = false)
     private BigDecimal amount;
+    @Column(nullable = false)
     private BigDecimal balance;
     @OneToOne
     private CoinModel coin;
-
 
 }

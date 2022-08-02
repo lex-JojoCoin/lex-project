@@ -1,23 +1,18 @@
 package com.jojocoin.cryptomarket.services;
 
-import com.jojocoin.cryptomarket.dtos.request.ClientRequestDto;
-import com.jojocoin.cryptomarket.dtos.request.MainWalletRequestDto;
-import com.jojocoin.cryptomarket.dtos.request.UserModelRequestDto;
+import com.jojocoin.cryptomarket.dtos.request.*;
 import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
-import com.jojocoin.cryptomarket.models.ClientModel;
-import com.jojocoin.cryptomarket.models.MainWalletModel;
-import com.jojocoin.cryptomarket.models.UserModel;
+import com.jojocoin.cryptomarket.models.*;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
 import com.jojocoin.cryptomarket.exceptions.DataIntegrityException;
-import com.jojocoin.cryptomarket.services.interfaces.ClientService;
-import com.jojocoin.cryptomarket.services.interfaces.MainWalletService;
-import com.jojocoin.cryptomarket.services.interfaces.UserService;
+import com.jojocoin.cryptomarket.services.interfaces.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -29,6 +24,8 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final UserService userService;
     private final MainWalletService mainWalletService;
+    private final CardService cardService;
+    private CryptoWalletService cryptoWalletService;
 
     public List<ClientModel> findAll() {
         return clientRepository.findAll();
@@ -54,6 +51,7 @@ public class ClientServiceImpl implements ClientService {
                 request.getName(),
                 request.getCpf(),
                 randomPixKey(),
+                new ArrayList<>(),
                 clientUser,
                 defaultWallet
                 );
@@ -90,11 +88,25 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    public ClientModel addCreditCard(String cpf, CardRequestDto request) {
+        CardModel card = cardService.save(request);
+        ClientModel client = findByCpf(cpf);
+        client.getCards().add(card);
+        return clientRepository.save(client);
+    }
+
+    public ClientModel createCryptoWallet(String cpf, CryptoWalletRequestDto request) {
+        CryptoWalletModel crypto = cryptoWalletService.save(request);
+        ClientModel client = findByCpf(cpf);
+        client.getMainWallet().getCryptoWalletModels().add(crypto);
+        return clientRepository.save(client);
+    }
+
     private String randomPixKey(){
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 16; i++) {
-            int control = random.nextInt(4);
+            int control = random.nextInt(3);
             if (control==0){
                 char x = ((char) (random.nextInt(26) + 'a'));
                 builder.append(Character.toString(x).toLowerCase());
