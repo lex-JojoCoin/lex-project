@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +21,5 @@ public class CoinModel implements Serializable {
     private String name;
     @Column(nullable = false)
     private BigDecimal priceUsd;
+
 }

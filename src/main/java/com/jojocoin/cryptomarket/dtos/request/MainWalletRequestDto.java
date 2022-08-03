@@ -12,6 +12,14 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class MainWalletRequestDto {
 
+<<<<<<< HEAD
+    @NotEmpty
+    private List<CryptoWalletModel> cryptoWallets;
+    @NotEmpty
+    private BigDecimal saldo;
+
+=======
     @NotNull
     private BigDecimal balance;
+>>>>>>> main
 }
