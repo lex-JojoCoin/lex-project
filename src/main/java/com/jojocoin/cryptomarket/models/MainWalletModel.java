@@ -19,13 +19,10 @@ public class MainWalletModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
-    private BigDecimal saldo;
+    private BigDecimal balance;
     @OneToMany
-    @JoinColumn(name = "cryptoWallet_id", nullable = false)
+    @JoinColumn(name = "cryptoWallet_id")
     private List<CryptoWalletModel> cryptoWalletModels;
-    @OneToOne
-    private ClientModel client;
-
     //@OneToOne
     //@JoinColumn(name = "transaction_id")
     //private List<Transaction> transactionLog;

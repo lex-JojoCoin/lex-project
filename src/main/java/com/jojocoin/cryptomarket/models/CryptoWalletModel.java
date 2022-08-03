@@ -5,23 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity(name = "TB_CRYPTO_WALLET")
-public class CryptoWalletModel {
+public class CryptoWalletModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    //@ManyToOne
-    //@JoinColumn(name = "Coin_id", nullable = false)
-    //private CoinModel coin;
+    @Column(nullable = false)
     private BigDecimal amount;
-    private BigDecimal saldo;
-    private Long privateKey;
-    private Long publicKey;
+    @Column(nullable = false)
+    private BigDecimal balance;
+    @OneToOne
+    private CoinModel coin;
 
 }

@@ -1,11 +1,11 @@
 package com.jojocoin.cryptomarket.dtos.request;
 
-import com.jojocoin.cryptomarket.models.CryptoWalletModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -13,14 +13,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class CryptoWalletRequestDto {
 
-    //@NotEmpty
-    //private CoinModel coin;
-    @NotEmpty
-    private BigDecimal saldo;
     @NotEmpty
     private BigDecimal amount;
     @NotEmpty
-    private Long privateKey;
+    private BigDecimal balance;
     @NotEmpty
-    private Long publicKey;
+    private String coinName;
 }

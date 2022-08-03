@@ -5,16 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
-
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Entity(name = "TB_Coin")
-public class CoinModel {
+@Entity(name = "TB_COINS")
+public class CoinModel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
+    @Column(nullable = false, unique = true)
+    private String symbol;
+    @Column(nullable = false, unique = true)
+    private String name;
+    @Column(nullable = false)
+    private BigDecimal priceUsd;
 
 }

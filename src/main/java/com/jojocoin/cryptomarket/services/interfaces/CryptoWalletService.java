@@ -7,10 +7,22 @@ import java.util.List;
 
 public interface CryptoWalletService {
 
+<<<<<<< HEAD
 
     CryptoWalletModel findById(Long id);
     CryptoWalletModel save(CryptoWalletRequestDto request);
     CryptoWalletModel update(Long id, CryptoWalletRequestDto request);
     void delete(Long id);
 
+=======
+    List<CryptoWalletModel> findAll();
+
+    CryptoWalletModel findById(Long id);
+
+    CryptoWalletModel save(CryptoWalletRequestDto request);
+
+    CryptoWalletModel update(Long id, CryptoWalletRequestDto request);
+
+    void delete(Long id);
+>>>>>>> main
 }

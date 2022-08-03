@@ -21,5 +21,4 @@ public class ClientRequestDto {
     private String username;
     @NotEmpty
     private String password;
-
 }
