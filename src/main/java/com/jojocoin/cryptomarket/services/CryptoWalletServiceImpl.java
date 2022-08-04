@@ -41,12 +41,7 @@ public class CryptoWalletServiceImpl implements CryptoWalletService {
     public CryptoWalletModel save(CryptoWalletRequestDto request){
         CoinModel coin = coinService.findById(request.getCoinName());
         CryptoWalletModel model =
-                new CryptoWalletModel(
-                        null,
-                        BigDecimal.ZERO,
-                        BigDecimal.ZERO,
-                        coin
-                );
+                new CryptoWalletModel(null, BigDecimal.ZERO, BigDecimal.ZERO, coin);
         return repository.save(model);
     }
 
