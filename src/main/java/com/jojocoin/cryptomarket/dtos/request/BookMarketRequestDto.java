@@ -1,6 +1,7 @@
 package com.jojocoin.cryptomarket.dtos.request;
 
 import com.jojocoin.cryptomarket.models.CryptoWalletModel;
+import com.jojocoin.cryptomarket.models.OrderModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,14 +14,10 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MainWalletRequestDto {
+public class BookMarketRequestDto {
 
-
-    @NotEmpty
-    private List<CryptoWalletModel> cryptoWallets;
-    @NotEmpty
-    private BigDecimal saldo;
     @NotNull
-    private BigDecimal balance;
-
+    private List<OrderModel> saleOrders;
+    @NotNull
+    private List<OrderModel> purchaseOrders;
 }

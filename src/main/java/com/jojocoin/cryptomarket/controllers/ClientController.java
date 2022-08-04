@@ -33,7 +33,7 @@ public class ClientController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<ClientModel>> findAll() {
         List<ClientModel> all = service.findAll();
-        log.info("All clients founded");
+        log.info("All clients found");
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class ClientController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ClientModel> findById(@PathVariable UUID id){
         ClientModel byId = service.findById(id);
-        log.info("Client founded from id: " + id);
+        log.info("Client found from id: " + id);
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
@@ -49,7 +49,7 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<ClientResponseDto> findByCpf(@PathVariable String cpf){
         ClientModel byCpf = service.findByCpf(cpf);
-        log.info("Client founded from id: " + cpf);
+        log.info("Client found from id: " + cpf);
         return new ResponseEntity<>(new ClientResponseDto(byCpf), HttpStatus.OK);
     }
 
