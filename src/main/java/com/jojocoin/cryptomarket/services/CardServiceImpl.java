@@ -28,13 +28,9 @@ public class CardServiceImpl implements CardService {
 
     public CardModel save(CardRequestDto request){
         return repository.save(new CardModel(
-                null,
-                request.getNetwork(),
-                request.getNumber(),
-                request.getName(),
-                request.getCvv(),
-                request.getExpiration()
-        ));
+                null, request.getNetwork(),
+                request.getNumber(), request.getName(),
+                request.getCvv(), request.getExpiration()));
     }
 
     public CardModel update(String number, CardRequestDto request){
