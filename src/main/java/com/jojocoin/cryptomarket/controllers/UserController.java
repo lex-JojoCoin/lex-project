@@ -1,6 +1,6 @@
 package com.jojocoin.cryptomarket.controllers;
 
-import com.jojocoin.cryptomarket.dtos.request.UserRequestDto;
+import com.jojocoin.cryptomarket.dtos.request.UserModelRequestDto;
 import com.jojocoin.cryptomarket.models.UserModel;
 import com.jojocoin.cryptomarket.services.interfaces.UserService;
 import lombok.AllArgsConstructor;
@@ -38,17 +38,9 @@ public class UserController {
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<UserModel> findById(@PathVariable String username){
-        UserModel model = service.findByUsername(username);
-        log.info("User found from the given username");
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
-
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<UserModel> save(@RequestBody @Valid UserRequestDto request){
+    public ResponseEntity<UserModel> save(@RequestBody @Valid UserModelRequestDto request){
         UserModel model = service.save(request);
         log.info("New user created");
         return new ResponseEntity<>(model, HttpStatus.CREATED);
@@ -65,7 +57,7 @@ public class UserController {
     @PutMapping("/{uuid}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserModel> update(@PathVariable UUID uuid,
-                                            UserRequestDto request){
+                                            UserModelRequestDto request){
         UserModel model = service.update(uuid, request);
         log.info("User updated");
         return new ResponseEntity<>(model, HttpStatus.OK);

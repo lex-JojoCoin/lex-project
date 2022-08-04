@@ -1,6 +1,8 @@
 package com.jojocoin.cryptomarket.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,7 +13,6 @@ import java.util.Set;
 import java.util.UUID;
 
 @Getter
-@Builder(builderClassName = "Builder", access = AccessLevel.PUBLIC)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "TB_USER")
