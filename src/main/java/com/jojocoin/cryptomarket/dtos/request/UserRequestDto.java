@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserModelRequestDto {
+public class UserRequestDto {
 
     @NotEmpty
     private String username;
