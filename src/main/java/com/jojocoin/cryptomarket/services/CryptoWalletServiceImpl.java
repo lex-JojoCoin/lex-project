@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -38,8 +37,6 @@ public class CryptoWalletServiceImpl implements CryptoWalletService {
         CryptoWalletModel model =
                 new CryptoWalletModel(
                         null,
-                        request.getPublicKey(),
-                        randomPrivateKey(),
                         BigDecimal.ZERO,
                         BigDecimal.ZERO,
                         coin
@@ -60,15 +57,5 @@ public class CryptoWalletServiceImpl implements CryptoWalletService {
         } catch (DataIntegrityViolationException exception) {
             throw new DataIntegrityException();
         }
-
-    }
-
-    private Long randomPrivateKey() {
-        StringBuilder builder = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 8; i++) {
-            builder.append(random.nextInt(10));
-        }
-        return Long.valueOf(builder.toString());
     }
 }
