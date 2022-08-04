@@ -1,6 +1,7 @@
 package com.jojocoin.cryptomarket.services;
 
 import com.jojocoin.cryptomarket.dtos.request.*;
+import com.jojocoin.cryptomarket.exceptions.DataConflictException;
 import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
 import com.jojocoin.cryptomarket.models.*;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
@@ -25,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
     private final UserService userService;
     private final MainWalletService mainWalletService;
     private final CardService cardService;
-    private CryptoWalletService cryptoWalletService;
+    private final CryptoWalletService cryptoWalletService;
 
     public List<ClientModel> findAll() {
         return clientRepository.findAll();
@@ -41,20 +42,16 @@ public class ClientServiceImpl implements ClientService {
 
     public ClientModel save(ClientRequestDto request) {
         UserModel clientUser = userService.save(
-                new UserModelRequestDto(request.getUsername(), request.getPassword()));
+                new UserRequestDto(request.getUsername(), request.getPassword()));
 
         MainWalletModel defaultWallet = mainWalletService.save(
                 new MainWalletRequestDto(BigDecimal.valueOf(0)));
 
         ClientModel clientModel = new ClientModel(
-                UUID.randomUUID(),
-                request.getName(),
-                request.getCpf(),
-                randomPixKey(),
-                new ArrayList<>(),
-                clientUser,
-                defaultWallet
-                );
+                UUID.randomUUID(), request.getName(),
+                request.getCpf(), randomPixKey(),
+                new ArrayList<>(), clientUser,
+                defaultWallet);
         return clientRepository.save(clientModel);
     }
 
