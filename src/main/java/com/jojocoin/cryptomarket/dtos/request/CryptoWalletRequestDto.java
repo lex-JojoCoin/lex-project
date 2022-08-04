@@ -22,4 +22,8 @@ public class CryptoWalletRequestDto {
     private BigDecimal balance;
     @NotEmpty
     private String coinName;
+
+    public CryptoWalletRequestDto(String coinName){
+        this.coinName = coinName;
+    }
 }

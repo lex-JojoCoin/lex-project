@@ -23,4 +23,8 @@ public class MainWalletRequestDto {
     @NotNull
     private BigDecimal balance;
 
+    public MainWalletRequestDto(BigDecimal balance){
+        this.balance = balance;
+    }
+
 }
