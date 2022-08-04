@@ -1,12 +1,7 @@
 package com.jojocoin.cryptomarket.controllers;
 
-import com.jojocoin.cryptomarket.dtos.request.ClientRequestDto;
 import com.jojocoin.cryptomarket.dtos.request.CryptoWalletRequestDto;
-import com.jojocoin.cryptomarket.dtos.request.UserModelRequestDto;
-import com.jojocoin.cryptomarket.dtos.response.ClientResponseDto;
-import com.jojocoin.cryptomarket.models.ClientModel;
 import com.jojocoin.cryptomarket.models.CryptoWalletModel;
-import com.jojocoin.cryptomarket.models.UserModel;
 import com.jojocoin.cryptomarket.services.CryptoWalletServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @Transactional
 @RestController
