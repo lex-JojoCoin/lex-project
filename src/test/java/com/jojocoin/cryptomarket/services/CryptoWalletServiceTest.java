@@ -33,7 +33,7 @@ class CryptoWalletServiceTest {
 
         this.pojoCoinModel = new CoinModel("lexcoin", "LCN", "Lex Coin", BigDecimal.valueOf(0.53));
 
-        this.pojoCryptoRequest = new CryptoWalletRequestDto("bitcoin");
+        this.pojoCryptoRequest = new CryptoWalletRequestDto(BigDecimal.TEN, BigDecimal.valueOf(200),"bitcoin");
         this.pojoCryptoModel = new CryptoWalletModel(1L, BigDecimal.TEN, BigDecimal.valueOf(200), pojoCoinModel);
     }
 

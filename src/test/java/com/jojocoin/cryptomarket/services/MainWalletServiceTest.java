@@ -26,7 +26,7 @@ class MainWalletServiceTest {
     void setUp(){
         this.repository = mock(MainWalletRepository.class);
         this.service = new MainWalletServiceImpl(repository);
-        this.pojoRequest = new MainWalletRequestDto(BigDecimal.ZERO);
+        this.pojoRequest = new MainWalletRequestDto(new ArrayList<>(), BigDecimal.ZERO);
         this.pojoModel = new MainWalletModel(1L, BigDecimal.ZERO, new ArrayList<>());
     }
 

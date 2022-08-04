@@ -31,7 +31,7 @@ public class MainWalletServiceImpl implements MainWalletService {
     @Override
     public MainWalletModel save(MainWalletRequestDto request) {
         MainWalletModel mainWalletModel = new MainWalletModel(
-                null, request.getBalance(), null);
+                null, request.getBalance(), request.getCryptoWallets());
         return mainWalletRepository.save(mainWalletModel);
     }
 

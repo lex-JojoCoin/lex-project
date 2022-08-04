@@ -45,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
                 new UserRequestDto(request.getUsername(), request.getPassword()));
 
         MainWalletModel defaultWallet = mainWalletService.save(
-                new MainWalletRequestDto(BigDecimal.valueOf(0)));
+                new MainWalletRequestDto(new ArrayList<>(), BigDecimal.valueOf(0)));
 
         ClientModel clientModel = new ClientModel(
                 UUID.randomUUID(), request.getName(),

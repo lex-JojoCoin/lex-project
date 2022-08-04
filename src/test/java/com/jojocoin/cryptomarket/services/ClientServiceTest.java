@@ -51,7 +51,7 @@ class ClientServiceTest {
         UserRequestDto pojoUserRequest = new UserRequestDto("test", "test123");
         this.pojoUserModel = new UserModel(UUID.randomUUID(), "test", "test123", Set.of(new RoleModel(UUID.randomUUID(), RoleName.ROLE_USER)));
 
-        MainWalletRequestDto pojoWalletRequest = new MainWalletRequestDto(BigDecimal.ZERO);
+        MainWalletRequestDto pojoWalletRequest = new MainWalletRequestDto(new ArrayList<>(), BigDecimal.ZERO);
         this.pojoWalletModel = new MainWalletModel(1L, BigDecimal.ZERO, new ArrayList<>());
 
         this.pojoClientRequest = new ClientRequestDto("Test", "995.195.240-29", "test", "test123");
@@ -60,7 +60,7 @@ class ClientServiceTest {
         this.pojoCardRequest = new CardRequestDto("Visa", "4716 0370 8535 2945", "test", "409", "03/2023");
         this.pojoCardModel = new CardModel(1L, "Visa", "4716 0370 8535 2945", "test", "409", "03/2023");
 
-        this.pojoCryptoWalletRequest = new CryptoWalletRequestDto("bitcoin");
+        this.pojoCryptoWalletRequest = new CryptoWalletRequestDto(BigDecimal.TEN, BigDecimal.valueOf(200),"bitcoin");
         this.pojoCryptoWalletModel = new CryptoWalletModel(1L, BigDecimal.TEN, BigDecimal.valueOf(200), new CoinModel("lexcoin", "LCN", "Lex Coin", BigDecimal.valueOf(0.53)));
     }
 
