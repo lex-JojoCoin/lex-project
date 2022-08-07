@@ -1,24 +1,21 @@
-package com.jojocoin.cryptomarket.dtos.request;
+package com.jojocoin.cryptomarket.models;
 
-import com.jojocoin.cryptomarket.models.ClientModel;
-import com.jojocoin.cryptomarket.models.CoinModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class SaleRequestDto {
-    @NotNull
+public class SaleModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String sellerCpf;
-    @NotNull
     private CoinModel coin;
-    @NotNull
     private Integer quantity;
-    @NotNull
     private BigDecimal sellingPrice;
 }
