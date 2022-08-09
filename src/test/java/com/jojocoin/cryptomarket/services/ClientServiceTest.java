@@ -60,7 +60,7 @@ class ClientServiceTest {
         this.pojoCardRequest = new CardRequestDto("Visa", "4716 0370 8535 2945", "test", "409", "03/2023");
         this.pojoCardModel = new CardModel(1L, "Visa", "4716 0370 8535 2945", "test", "409", "03/2023");
 
-        this.pojoCryptoWalletRequest = new CryptoWalletRequestDto("bitcoin");
+        this.pojoCryptoWalletRequest = new CryptoWalletRequestDto(BigDecimal.TEN, BigDecimal.valueOf(200),"bitcoin");
         this.pojoCryptoWalletModel = new CryptoWalletModel(1L, BigDecimal.TEN, BigDecimal.valueOf(200), new CoinModel("lexcoin", "LCN", "Lex Coin", BigDecimal.valueOf(0.53)));
     }
 

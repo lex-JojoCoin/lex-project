@@ -1,6 +1,7 @@
 package com.jojocoin.cryptomarket.services;
 
 import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
+import com.jojocoin.cryptomarket.feign.CoinClientFeignService;
 import com.jojocoin.cryptomarket.models.CoinModel;
 import com.jojocoin.cryptomarket.repository.CoinRepository;
 import com.jojocoin.cryptomarket.services.interfaces.CoinService;
@@ -22,8 +23,9 @@ class CoinServiceTest {
 
     @BeforeEach
     void setUp(){
+        CoinClientFeignService feignService = mock(CoinClientFeignService.class);
         this.repository = mock(CoinRepository.class);
-        this.service = new CoinServiceImpl(repository);
+        this.service = new CoinServiceImpl(feignService,repository);
     }
 
     @Test
