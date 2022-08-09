@@ -22,4 +22,21 @@ public class CoinModel implements Serializable {
     @Column(nullable = false)
     private BigDecimal priceUsd;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CoinModel coinModel)) return false;
+
+        if (!getId().equals(coinModel.getId())) return false;
+        if (!getSymbol().equals(coinModel.getSymbol())) return false;
+        return getName().equals(coinModel.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getSymbol().hashCode();
+        result = 31 * result + getName().hashCode();
+        return result;
+    }
 }

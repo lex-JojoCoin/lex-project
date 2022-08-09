@@ -16,7 +16,7 @@ import java.util.List;
 public class MainWalletModel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private BigDecimal balance;
@@ -26,4 +26,12 @@ public class MainWalletModel implements Serializable {
     //@OneToOne
     //@JoinColumn(name = "transaction_id")
     //private List<Transaction> transactionLog;
+
+    public void subtractBalance(BigDecimal value){
+        this.balance = balance.subtract(value);
+    }
+
+    public void addBalance(BigDecimal value){
+        this.balance = balance.add(value);
+    }
 }

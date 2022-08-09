@@ -13,15 +13,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Entity(name = "TB_Exchange")
-
 public class ExchangeModel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
+    @Column
+    private BigDecimal balance;
     @OneToOne
     @JoinColumn(name = "Book_Id")
     private BookMarketModel bookMarket;
-    private BigDecimal balance;
 
+    public ExchangeModel addBalance(BigDecimal value){
+        this.balance = balance.add(value);
+        return this;
+    }
 }

@@ -1,7 +1,8 @@
 package com.jojocoin.cryptomarket.services;
 
 import com.jojocoin.cryptomarket.dtos.request.*;
-import com.jojocoin.cryptomarket.exceptions.DataConflictException;
+import com.jojocoin.cryptomarket.exceptions.InvalidCardException;
+import com.jojocoin.cryptomarket.exceptions.InvalidPixKeyException;
 import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
 import com.jojocoin.cryptomarket.models.*;
 import com.jojocoin.cryptomarket.repository.ClientRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.Random;
 import java.util.UUID;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
@@ -67,6 +70,10 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.save(clientModel);
     }
 
+    public ClientModel update(ClientModel entity){
+        return clientRepository.save(entity);
+    }
+
     public void delete(UUID id) {
         ClientModel byId = findById(id);
         try {
@@ -99,6 +106,45 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.save(client);
     }
 
+    public ClientModel addBalanceOnMainWalletByPix(String cpf, String pix, BigDecimal value){
+        ClientModel client = findByCpf(cpf);
+        verifyPixKey(pix, client);
+        client.getMainWallet().addBalance(value);
+        return clientRepository.save(client);
+    }
+
+    public ClientModel addBalanceOnMainWalletByCard(String cpf, CardRequestDto request, BigDecimal value){
+        ClientModel client = findByCpf(cpf);
+        CardModel card = cardService.findByNumber(request.getNumber());
+        verifyCardClient(client, card);
+        client.getMainWallet().addBalance(value);
+        return clientRepository.save(client);
+    }
+
+    public void updateAddCryptoWallet(String cpf, String coin, CryptoWalletRequestDto request){
+        ClientModel client = findByCpf(cpf);
+        CryptoWalletModel cryptoWallet = client
+                .getMainWallet()
+                .getCryptoWalletModels()
+                .stream()
+                .filter(x -> x.getCoin().getId().equals(coin))
+                .findFirst().orElseThrow(() -> new ResourceNotFoundException(coin));
+        cryptoWalletService.add(cryptoWallet.getId(), request);
+        clientRepository.save(client);
+    }
+
+    public void updateSubCryptoWallet(String cpf, String coin, CryptoWalletRequestDto request){
+        ClientModel client = findByCpf(cpf);
+        CryptoWalletModel cryptoWallet = client
+                .getMainWallet()
+                .getCryptoWalletModels()
+                .stream()
+                .filter(x -> x.getCoin().getId().equals(coin))
+                .findFirst().orElseThrow(() -> new ResourceNotFoundException(coin));
+        cryptoWalletService.subtract(cryptoWallet.getId(), request);
+        clientRepository.save(client);
+    }
+
     private String randomPixKey(){
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
@@ -114,4 +160,13 @@ public class ClientServiceImpl implements ClientService {
         return builder.toString();
     }
 
+    private void verifyPixKey(String pix, ClientModel client){
+        if (!client.getPix().equals(pix))
+            throw new InvalidPixKeyException();
+    }
+
+    private void verifyCardClient(ClientModel client, CardModel card) {
+        if (client.getCards().stream().noneMatch(x-> x.equals(card)))
+            throw new InvalidCardException();
+    }
 }

@@ -2,21 +2,19 @@ package com.jojocoin.cryptomarket.dtos.response;
 
 import com.jojocoin.cryptomarket.models.ClientModel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 
 @Getter
-@NoArgsConstructor
 public class ClientResponseDto {
 
-    private String name;
-    private String cpf;
-    private String pix;
-    private String username;
-    private MainWalletResponseDto mainWallet;
-    private List<CardResponseDto> cards;
+    private final String name;
+    private final String cpf;
+    private final String pix;
+    private final String username;
+    private final MainWalletResponseDto mainWallet;
+    private final List<CardResponseDto> cards;
 
     public ClientResponseDto(ClientModel model) {
         this.name = model.getName();

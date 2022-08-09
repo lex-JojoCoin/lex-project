@@ -3,17 +3,15 @@ package com.jojocoin.cryptomarket.dtos.response;
 import com.jojocoin.cryptomarket.models.CoinModel;
 import com.jojocoin.cryptomarket.models.CryptoWalletModel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Getter
-@NoArgsConstructor
 public class CryptoWalletResponse {
 
-    private BigDecimal amount;
-    private BigDecimal balance;
-    private CoinModel coin;
+    private final BigDecimal amount;
+    private final BigDecimal balance;
+    private final CoinModel coin;
 
     public CryptoWalletResponse(CryptoWalletModel model) {
         this.amount = model.getAmount();

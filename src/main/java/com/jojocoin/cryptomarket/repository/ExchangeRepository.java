@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface ExchangeRepository extends JpaRepository<ExchangeModel, UUID> {
+public interface ExchangeRepository extends JpaRepository<ExchangeModel, Long> {
 }

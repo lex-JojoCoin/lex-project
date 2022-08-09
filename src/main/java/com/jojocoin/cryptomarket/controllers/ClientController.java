@@ -18,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,6 +60,7 @@ public class ClientController {
         log.info("New client saved on database");
         return new ResponseEntity<>(new ClientResponseDto(save), HttpStatus.CREATED);
     }
+
     @PutMapping("/updateById/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ClientModel> update(@PathVariable UUID id,
@@ -119,5 +121,25 @@ public class ClientController {
         log.info("Added crypto wallet from client with cpf: " + cpf);
         return new ResponseEntity<>(new ClientResponseDto(patch), HttpStatus.OK);
 
+    }
+
+    @PatchMapping("/{cpf}/balance/add/card")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ResponseEntity<ClientResponseDto> addBalance(@PathVariable String cpf,
+                                                        @RequestBody CardRequestDto request,
+                                                        @RequestParam  BigDecimal value){
+        ClientModel patch = service.addBalanceOnMainWalletByCard(cpf, request, value);
+        log.info("Added balance for cpf: {} by card!", cpf);
+        return new ResponseEntity<>(new ClientResponseDto(patch), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{cpf}/balance/add/pix")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ResponseEntity<ClientResponseDto> addBalance(@PathVariable String cpf,
+                                                        @RequestParam String pix,
+                                                        @RequestParam BigDecimal value){
+        ClientModel patch = service.addBalanceOnMainWalletByPix(cpf, pix, value);
+        log.info("Added balance for cpf: {} by pix!", cpf);
+        return new ResponseEntity<>(new ClientResponseDto(patch), HttpStatus.OK);
     }
 }
