@@ -1,6 +1,7 @@
 package com.jojocoin.cryptomarket.services;
 
 import com.jojocoin.cryptomarket.dtos.request.MainWalletRequestDto;
+import com.jojocoin.cryptomarket.exceptions.DataIntegrityException;
 import com.jojocoin.cryptomarket.exceptions.ResourceNotFoundException;
 import com.jojocoin.cryptomarket.models.MainWalletModel;
 import com.jojocoin.cryptomarket.repository.MainWalletRepository;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -31,11 +31,7 @@ public class MainWalletServiceImpl implements MainWalletService {
     @Override
     public MainWalletModel save(MainWalletRequestDto request) {
         MainWalletModel mainWalletModel = new MainWalletModel(
-                null,
-                request.getBalance(),
-                null
-        );
-
+                null, request.getBalance(), null);
         return mainWalletRepository.save(mainWalletModel);
     }
 
@@ -48,7 +44,12 @@ public class MainWalletServiceImpl implements MainWalletService {
 
     public void deleteById(Long id) {
         MainWalletModel wallet = findById(id);
-        mainWalletRepository.delete(wallet);
+        try {
+            mainWalletRepository.delete(wallet);
+        } catch (Exception e){
+            throw new DataIntegrityException();
+        }
+
     }
 
 }

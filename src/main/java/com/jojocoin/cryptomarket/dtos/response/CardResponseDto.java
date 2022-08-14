@@ -2,14 +2,12 @@ package com.jojocoin.cryptomarket.dtos.response;
 
 import com.jojocoin.cryptomarket.models.CardModel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class CardResponseDto {
 
-    private String network;
-    private String number;
+    private final String network;
+    private final String number;
 
     public CardResponseDto(CardModel model) {
         this.network = model.getNetwork();

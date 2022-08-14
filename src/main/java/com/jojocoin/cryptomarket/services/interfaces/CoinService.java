@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface CoinService {
 
+    void saveAll();
     List<CoinModel> findAll();
     CoinModel findById(String name);
 }

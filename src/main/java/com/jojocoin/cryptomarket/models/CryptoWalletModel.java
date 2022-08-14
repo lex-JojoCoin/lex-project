@@ -24,4 +24,17 @@ public class CryptoWalletModel implements Serializable {
     @OneToOne
     private CoinModel coin;
 
+    public void updateBalance(){
+        this.balance = coin.getPriceUsd().multiply(amount);
+    }
+
+    public void addAmount(BigDecimal value){
+        this.amount = amount.add(value);
+        this.balance = balance.add(coin.getPriceUsd().multiply(amount));
+    }
+
+    public void subAmount(BigDecimal value){
+        this.amount = amount.subtract(value);
+        this.balance = balance.subtract(coin.getPriceUsd().multiply(amount));
+    }
 }
